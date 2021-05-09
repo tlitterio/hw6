@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIEI-451: Week 3 Homework Instructions</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet" type="text/css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.css"
+    rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+</head>
+
+<body class="p-8 line-numbers">
+  <div class="container mx-auto">
+    <h1 class="text-4xl my-4">Week 6 Homework</h1>
+    <div class="space-y-4">
+      <p><a href="https://www.imdb.com/" class="text-pink-500 underline">IMDB</a> – the Internet Movie Database (owned by Amazon) – famously does not provide an API to access data about the millions of movies and TV shows indexed on their website. That doesn't mean there can't be one! It's up to you to create it.</p>
+      <h3 class="text-xl font-bold">Getting Started</h3>
+      <p>Begin by heading over to <a href="https://github.com/kiei451-spring2021/hw6" class="text-pink-500 underline">the starter project</a> – select "Use this template", then create a repository in your own GitHub account called <span class="bg-orange-100 text-red-400 font-mono p-1">hw6</span>. Clone this project and open it in VSCode.</p>
+      <p>Open a VSCode Terminal and (making sure you're in the right project directory) type <span class="bg-orange-100 text-red-400 font-mono p-1">npm install</span> – <strong>don't skip this step!</strong> – this will install all the necessary software needed to run the back-end application. Then, type <span class="bg-orange-100 text-red-400 font-mono p-1">netlify dev</span> to start the back-end server.</p>
+      <p>Open <span class="bg-orange-100 text-red-400 font-mono p-1">/.netlify/functions/movies</span> in Chrome. Nothing there yet! Then, open the code for the lambda function, located in <span class="bg-orange-100 text-red-400 font-mono p-1">/netlify/functions/movies.js</span> and get coding!</p>
+
+      <h3 class="text-xl font-bold">The Goal</h3>
+      <p>
+        While IMDB does not have a live, open API for developers, they do provide file-based downloads to their raw data. A sample of that data has been downloaded and provided at <span class="bg-orange-100 text-red-400 font-mono p-1">movies.csv</span>. The code for reading that data into a JavaScript object has also already been provided. Your job is to create a JSON-based API for front-end JavaScript developers to use.
+      </p>
+      <h3 class="text-xl font-bold">Rubric</h3>
+      <ol class="list-decimal list-inside">
+        <li>(1 points) Write the recipe (algorithm) for your approach in the comments. Do this first!</li>
+        <li>(4 points) Require the developer using your API to pass two querystring parameters – one for the year the movie was released (the <em>startYear</em>) and another for the <em>genre</em>. For example: <span class="bg-orange-100 text-red-400 font-mono p-1">http://localhost:8888/.netlify/functions/movies?year=2018&genre=Comedy</span>. Only provide results for the given year and genre. <em>Hint: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes" target="_blank" class="text-pink-500 underline">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes</a></em>. <strong>If these two parameters are not provided, return a simple String with an error message. <em>Hint hint: if a variable doesn't exist, it equals <span class="bg-orange-100 text-red-400 font-mono p-1">undefined</span></em>.</strong></li>
+        <li>(3 points) The resulting JSON should be an Object, which includes two key-value pairs – <span class="bg-orange-100 text-red-400 font-mono p-1">numResults</span> and <span class="bg-orange-100 text-red-400 font-mono p-1">movies</span>. The value of <span class="bg-orange-100 text-red-400 font-mono p-1">numResults</span> should be the total number of movies returned, and the value of <span class="bg-orange-100 text-red-400 font-mono p-1">movies</span> should be an Array of Objects containing the following details on each movie:
+          <ul class="ml-8 list-disc list-inside">
+            <li>The primary title of the movie</li>
+            <li>The year the movie was released</li>
+            <li>The movie's genres</li>
+          </ul>
+        </li>
+        <li>(2 points) Ignore any results with no genre – i.e. when the <em>genres</em> is <span class="bg-orange-100 text-red-400 font-mono p-1">\\N</span> or movies with no runtime – when <em>runtimeMinutes</em> is <span class="bg-orange-100 text-red-400 font-mono p-1">\\N</span>.</li>
+      </ol>
+      <h3 class="text-xl font-bold">Guidelines for Submission</h3>
+      <p>All your work should take place in <span class="bg-orange-100 text-red-400 font-mono p-1">/netlify/functions/movies.js</span>; i.e. that should be the only file that's modified from the original project template. Your finished product should live in your GitHub account at <span class="bg-orange-100 text-red-400 font-mono p-1">https://github.com/&lt;your GitHub username&gt;/hw6</span>, and <strong>this URL should be submitted as the "website URL" for this assignment in Canvas.</strong></p>
+    </div>
+  </div>
+</body>
+
+</html>

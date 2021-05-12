@@ -3,6 +3,7 @@ let csv = require('neat-csv')
 
 // allows us to read files from disk
 let fs = require('fs')
+const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants')
 
 // defines a lambda function
 exports.handler = async function(event) {
@@ -39,26 +40,32 @@ exports.handler = async function(event) {
       let objectTitle = moviesFromCsv[i].primaryTitle
       //define objectYear and objectGenre for comparison
       let objectYear = moviesFromCsv[i].startYear
+      //runtimeMinutes variable for testing
       let objectRuntime = moviesFromCsv[i].runtimeMinutes
-      //match lowercase - drove me crazy that I was not matching lower case in URL
+      //empty array of genres to fill for movie object; not sure this is completely necesary but have a feeling may leed to problems or weird formating if not done
       let objectGenres = []
-      let genreTemp = moviesFromCsv[i].genres.split(",")
-      for (let g=0;g<genreTemp.length;g++){
-        objectGenres.push(genreTemp[g].toLowerCase())
+      //split genres for correct formating
+      let genreReturn = moviesFromCsv[i].genres.split(",")
+                            //switch to lowercase for future matching - drove me crazy that I was not matching lower case in URL
+      for (let g=0;g<genreReturn.length;g++){
+        objectGenres.push(genreReturn[g])
       }
-      //moviesFromCsv[i].genres.toLowerCase()
+      //created to convert genres to lowercase for consistent matching yet still preserving the case in the return data; tried adding .toLowercase() inline in the below match but being an array did not work.
+      let genreMatch = []
+      for (let t=0;t<objectGenres.length;t++){genreMatch.push(objectGenres[t].toLowerCase())}
       genre = genre.toLowerCase()
       //skip any movies that have \\N for Genre or runtime
-      if (objectRuntime == `\\N` || objectGenres.includes(`\\N`)) {continue}
+      if (objectRuntime == `\\N` || genreMatch.includes(`\\N`)) {continue}
+
       //check if year and genre match
-      if (year==objectYear && objectGenres.includes(genre)){
+      if (year==objectYear && genreMatch.includes(genre)){
         //increment count
         returnValue.numResults++
         //create returnObject with required fields
         let movie = {
           Title: objectTitle,
           Released: objectYear,
-          Runtime: objectRuntime,
+          //Runtime: objectRuntime,
           Genres: objectGenres
         }
         //add movie to return results
